@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchMovies } from "../features/movies/moviesSlice";
 import type { AppDispatch, RootState } from "../store";
+import MovieCard from "./MovieCard";
 
 const MovieSearch = () => {
   const [query, setQuery] = useState("");
@@ -35,9 +36,7 @@ const MovieSearch = () => {
 
       <ul>
         {movies.map((movie) => (
-          <li key={movie.imdbID}>
-            <strong> {movie.Title} </strong> ({movie.Year})
-          </li>
+          <MovieCard movie={movie} key={movie.imdbID} />
         ))}
       </ul>
     </div>
