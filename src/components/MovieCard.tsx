@@ -1,5 +1,6 @@
 import React from "react";
 import { Movie } from "../types/movie";
+import { Link } from "react-router-dom";
 import styles from "./MoviCard.module.css";
 
 interface MovieCardProps {
@@ -8,13 +9,17 @@ interface MovieCardProps {
 
 const MovieCard: React.FC<MovieCardProps> = ({ movie }) => {
   return (
-    <div className={styles.card}>
+    <Link to={`/movie/${movie.imdbID}`} className={styles.card}>
       <img
         src={movie.Poster !== "N/A" ? movie.Poster : "/no-poster.png"}
         alt={movie.Title}
         className={styles.info}
       />
-    </div>
+      <div className={styles.info}>
+        <h2>{movie.Title}</h2>
+        <p>{movie.Year}</p>
+      </div>
+    </Link>
   );
 };
 

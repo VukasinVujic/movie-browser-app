@@ -15,14 +15,16 @@ const initialState: MoviesState = {
 };
 
 export const searchMovies = createAsyncThunk(
-  "movies/search",
-  async (query: string, thunkAPI) => {
+  "movies/searchMovies",
+  async (query: string, { rejectWithValue }) => {
     try {
       const data = await fetchMovies(query);
+
       if (data.Response === "False") throw new Error(data.Error);
+
       return data.Search;
     } catch (err: any) {
-      return thunkAPI.rejectWithValue(err.message);
+      return rejectWithValue(err.message);
     }
   }
 );
@@ -30,7 +32,13 @@ export const searchMovies = createAsyncThunk(
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
-  reducers: {},
+  reducers: {
+    clearMovies: (state) => {
+      state.movies = [];
+      state.error = null;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(searchMovies.pending, (state) => {
@@ -49,3 +57,4 @@ const moviesSlice = createSlice({
 });
 
 export default moviesSlice.reducer;
+export const { clearMovies } = moviesSlice.actions;

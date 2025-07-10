@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searchMovies } from "../features/movies/moviesSlice";
+import { searchMovies, clearMovies } from "../features/movies/moviesSlice";
 import type { AppDispatch, RootState } from "../store";
 import MovieCard from "./MovieCard";
 
@@ -19,6 +19,11 @@ const MovieSearch = () => {
     }
   };
 
+  const clearSearch = () => {
+    setQuery("");
+    dispatch(clearMovies());
+  };
+
   return (
     <div>
       <h1>Movi Browser</h1>
@@ -34,6 +39,9 @@ const MovieSearch = () => {
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error...</p>}
 
+      {!loading && !error && movies.length === 0 && (
+        <p> No movies found. try another search</p>
+      )}
       <ul>
         {movies.map((movie) => (
           <MovieCard movie={movie} key={movie.imdbID} />

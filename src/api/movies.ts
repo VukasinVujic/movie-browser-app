@@ -1,8 +1,8 @@
-const API_KEY = "d9d70785";
+export const API_KEY = "d9d70785";
 const BASE_URL = "https://www.omdbapi.com/";
 
 export const fetchMovies = async (query: string) => {
-  const response = await fetch(`${BASE_URL}?apikey=${API_KEY}`);
+  const response = await fetch(`${BASE_URL}?apikey=${API_KEY}&s=${query}`);
 
   if (!response.ok) {
     throw new Error("Network response was not ok");
